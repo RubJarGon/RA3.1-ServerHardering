@@ -1,26 +1,56 @@
-# RA3_1
+# RA3.2: Web Application Firewall (WAF) - Apache & ModSecurity
 
-Introduction [INTRO](URL_TASKS) :
+**Autor:** RubJarGon
+**Asignatura:** Seguridad / Despliegue de Aplicaciones Web
+**Imagen Base:** `apache-hardening` (RA3.1)
+**Estado:** ✅ Completado
 
-# Tasks
+## 📋 Descripción de la Actividad
+El objetivo de esta práctica es añadir una capa de defensa activa al servidor web Apache asegurado previamente. Se ha implementado un **WAF (Web Application Firewall)** utilizando **ModSecurity v3** junto con las reglas estándar de la industria **OWASP Core Rule Set (CRS)**.
 
-* [TASK_1](#URL_TASK_1): XXX
-* [TASK_2](#URL_TASK_2): XXX
+El sistema ahora es capaz de detectar y bloquear ataques en tiempo real, como Inyecciones SQL (SQLi), Cross-Site Scripting (XSS) y otros vectores definidos en el OWASP Top 10.
 
-# Task_1
+## 🏗️ Arquitectura en Cascada (Docker)
+Este contenedor sigue una estrategia de herencia de imágenes para mantener la modularidad:
 
-Intro...
+1.  **Nivel 1 (RA3.1):** Imagen base con Hardening (SSL/TLS, HSTS, CSP).
+2.  **Nivel 2 (RA3.2):** Se construye sobre la anterior (`FROM apache-hardening`) y añade el motor WAF.
 
-![IMG](URL_IMG)
+## ⚙️ Implementación Técnica
 
-Example code:
+### 1. Motor ModSecurity
+Se ha instalado el módulo `libapache2-mod-security2`.
+* **Configuración:** `SecRuleEngine On`
+* **Acción:** Bloqueo activo (devuelve error 403 Forbidden ante amenazas).
 
-```
-$ git clone https://github.com/openssh/openssh-portable
-$ patch -p1 < ~/path/to/openssh.patch
-$ autoreconf
-$ ./configure
-$ make
-```
+### 2. Reglas OWASP CRS (Core Rule Set)
+Debido a inconsistencias en los paquetes de repositorios estándar, las reglas se han implementado clonando directamente el repositorio oficial de GitHub para asegurar la última versión y compatibilidad.
+* **Fuente:** `https://github.com/coreruleset/coreruleset.git`
+* **Integración:** Se cargan mediante `Include` en la configuración de Apache.
 
-# Task_2
+### 3. Correcciones de Entorno (Fixes)
+Para adaptar la imagen base de Apache (`httpd`) al paquete de ModSecurity de Ubuntu, se realizaron ajustes manuales en el `Dockerfile`:
+* Creación explícita de directorios de logs (`/var/log/apache2/`) para evitar el cierre inesperado del contenedor.
+* Carga manual de dependencias (`unique_id_module`) requeridas por el WAF.
+
+## 📸 Evidencia de Funcionamiento
+
+Se ha realizado una prueba de concepto simulando un ataque de **Cross-Site Scripting (XSS)** reflejado mediante la URL:
+`https://localhost:8081/?param=<script>alert(1)</script>`
+
+**Resultado:**
+El WAF intercepta la petición maliciosa y deniega el acceso inmediatamente.
+
+![Evidencia de Bloqueo 403](imagen_1.png)
+*(El servidor devuelve "Forbidden" al detectar el patrón `<script>` en los parámetros).*
+
+## 🚀 Despliegue
+
+Para construir y ejecutar este contenedor:
+
+```bash
+# 1. Construir la imagen (asegúrate de tener la imagen base 'apache-hardening' creada)
+docker build -t apache-waf .
+
+# 2. Ejecutar el contenedor (Mapeando puerto 8081)
+docker run -d -p 8081:443 --name mi-waf apache-waf
