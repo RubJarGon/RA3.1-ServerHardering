@@ -41,7 +41,7 @@ Se ha realizado una prueba de concepto simulando un ataque de **Cross-Site Scrip
 **Resultado:**
 El WAF intercepta la petición maliciosa y deniega el acceso inmediatamente.
 
-![Evidencia de Bloqueo 403](imagen_1.png)
+![Evidencia de Bloqueo 403](Imagen_1.png)
 *(El servidor devuelve "Forbidden" al detectar el patrón `<script>` en los parámetros).*
 
 ## 🚀 Despliegue
