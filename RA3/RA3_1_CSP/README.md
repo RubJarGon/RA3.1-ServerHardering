@@ -7,6 +7,8 @@
 ## 📋 Descripción de la Actividad
 El objetivo de esta práctica es asegurar (harden) el servidor web Apache mediante la implementación de cabeceras de seguridad HTTP estrictas. Se ha configurado el servidor para protegerse contra ataques de Cross-Site Scripting (XSS) y para forzar conexiones seguras mediante HTTPS.
 
+Docker: https://hub.docker.com/repository/docker/rubjargon/pr1/general
+
 ## 🛡️ Medidas de Seguridad Implementadas
 
 ### 1. Content Security Policy (CSP)
