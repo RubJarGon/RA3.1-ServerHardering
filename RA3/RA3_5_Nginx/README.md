@@ -3,6 +3,8 @@
 ## 📖 Descripción
 Despliegue de un servidor **Nginx** utilizando Docker (base **Debian 12 Bookworm**) con una configuración integral de seguridad. Este entorno replica y mejora el endurecimiento realizado previamente en Apache, adaptándolo a la arquitectura de alto rendimiento de Nginx.
 
+Docker: https://hub.docker.com/repository/docker/rubjargon/nginx-hardened/general
+
 ## 🛠️ Tecnologías y Configuración
 * **Base:** Debian 12 (Bookworm-slim) para evitar problemas de repositorios y asegurar estabilidad.
 * **PHP 8.2 FPM:** Procesamiento de scripts dinámicos a través de socket UNIX.
@@ -49,13 +51,5 @@ Acceso a: `http://localhost:8081/privado/`
 
 ![Evidencia Area Privada](imagen_3.png)
 
-## ☁️ Docker Hub
-La imagen ha sido empaquetada y subida al registro público:
-```bash
-docker login
-docker tag nginx-hardened rubjargon/nginx-hardened:v1
-docker push rubjargon/nginx-hardened:v1
-```
 
----
-**Autor:** rubjargon
+
