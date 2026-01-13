@@ -3,6 +3,8 @@
 ## 📖 Descripción
 En este ejercicio se ha configurado un servidor web **Apache** dentro de un contenedor Docker para soportar conexiones seguras (**HTTPS**) mediante la generación e instalación de un **certificado digital autofirmado** con OpenSSL.
 
+Docker: https://hub.docker.com/repository/docker/rubjargon/apache-ssl/general
+
 ## 🛠️ Tecnologías Utilizadas
 * **Base:** Ubuntu 22.04.
 * **Servidor Web:** Apache2.
