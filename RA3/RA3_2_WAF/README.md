@@ -10,6 +10,8 @@ El objetivo de esta práctica es añadir una capa de defensa activa al servidor 
 
 El sistema ahora es capaz de detectar y bloquear ataques en tiempo real, como Inyecciones SQL (SQLi), Cross-Site Scripting (XSS) y otros vectores definidos en el OWASP Top 10.
 
+Docker: https://hub.docker.com/repository/docker/rubjargon/apache-waf/general
+
 ## 🏗️ Arquitectura en Cascada (Docker)
 Este contenedor sigue una estrategia de herencia de imágenes para mantener la modularidad:
 
@@ -41,7 +43,7 @@ Se ha realizado una prueba de concepto simulando un ataque de **Cross-Site Scrip
 **Resultado:**
 El WAF intercepta la petición maliciosa y deniega el acceso inmediatamente.
 
-![Evidencia de Bloqueo 403](imagen_1.png)
+![Evidencia de Bloqueo 403](Imagen_1.png)
 *(El servidor devuelve "Forbidden" al detectar el patrón `<script>` en los parámetros).*
 
 ## 🚀 Despliegue
