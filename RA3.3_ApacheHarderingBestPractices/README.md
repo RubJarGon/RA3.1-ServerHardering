@@ -43,13 +43,4 @@ Se ha verificado mediante el comando `curl -I` que la configuración de segurida
 
 ![Evidencia de Hardening con Curl](imagen.png)
 
-## ☁️ Docker Hub
-La imagen securizada ha sido subida al repositorio público:
-```bash
-docker login
-docker tag apache-hardened rubjargon/apache-hardened:v1
-docker push rubjargon/apache-hardened:v1
-```
-
 ---
-**Autor:** rubjargon
